@@ -51,9 +51,33 @@ long LenOfList(Node * head)
 }
 void DeleteNode(Node ** head, long data)
 {
-    Node * current = *head , *prev;
+    Node * tmp = *head;
+    Node * prev;
 
-    if(current != NULL && current )
+    if(tmp != NULL && tmp -> data == data)
+    {
+        // change head
+        *head = tmp -> next;
+        free(tmp);
+        return;
+    }
+
+    // Search for the data to be deleted
+    while(tmp != NULL && tmp -> data != data)
+    {
+        prev = tmp;
+        tmp = tmp -> next;
+    }
+
+    // if data doesn't exist in ll
+    if(tmp == NULL)
+    {
+        return;
+    }
+    // unlink the node from ll
+    prev -> next = tmp -> next;
+
+    free(tmp);
 }
 
 int main(int argc, char const *argv[])
@@ -63,6 +87,9 @@ int main(int argc, char const *argv[])
     PushNode(&head,10);
     PushNode(&head,20);
     SearchInList(head,21)? printf("True\n") : printf("False\n");
+    DeleteNode(&head,10);
     printf("Elements: %ld\n",LenOfList(head));
+
+    free(head);
     return 0;
 }
