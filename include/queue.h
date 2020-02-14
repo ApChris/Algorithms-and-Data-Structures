@@ -18,5 +18,5 @@ Node * CreateNode(long data);
 Queue * CreateQueue();
 void PushQueue(Queue * queue, long data);
 void PopQueue(Queue * queue);
-
+bool EmptyQueue(Queue * queue);
 #endif
