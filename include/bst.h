@@ -17,5 +17,5 @@ Node * CreateNode(long data);
 BST * CreateBST();
 Node * PushBST(Node * node, long data);
 void inorder(Node * node);
-
+Node * DeleteNode(Node * node, long data);
 #endif
