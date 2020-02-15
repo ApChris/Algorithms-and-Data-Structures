@@ -52,6 +52,58 @@ Node * PushBST(Node * node, long data)
     return node;
 }
 
+Node * minvNode(Node * node)
+{
+    Node * current = node;
+    while(current && current -> left != NULL)
+    {
+        current = current -> left;
+    }
+
+    return current;
+}
+
+
+
+Node * DeleteNode(Node * node, long data)
+{
+    if(node == NULL)
+    {
+        return node;
+    }
+
+    if(data < node -> data)
+    {
+        node -> left = DeleteNode(node -> left, data);
+    }
+    else if(data > node -> data)
+    {
+        node -> right = DeleteNode(node -> right, data);
+    }
+    else
+    {
+        if(node -> left == NULL)
+        {
+            Node * tmp = node -> right;
+            free(node);
+            return tmp;
+        }
+        else if(node -> right == NULL)
+        {
+            Node * tmp = node -> left;
+            free(node);
+            return tmp;
+        }
+
+        Node * tmp = minvNode(node -> right);
+        node -> data = tmp -> data;
+
+        node -> right = DeleteNode(node -> right, node -> data);
+
+    }
+    return node;
+}
+
 
 int main(int argc, char ** argv)
 {
@@ -62,6 +114,13 @@ int main(int argc, char ** argv)
     PushBST(bst -> root, 5);
     PushBST(bst -> root, 12);
     PushBST(bst -> root, 14);
+
+    DeleteNode(bst -> root, 12);
+    DeleteNode(bst -> root, 14);
+    DeleteNode(bst -> root, 20);
+    DeleteNode(bst -> root, 5);
+    DeleteNode(bst -> root, 40);
+
 
     inorder(bst -> root);
 
