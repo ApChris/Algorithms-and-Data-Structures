@@ -80,6 +80,33 @@ void DeleteNode(Node ** head, long data)
     free(tmp);
 }
 
+void Reverse(Node ** head)
+{
+    Node * prev = NULL;
+    Node * current = *head;
+    Node * next = NULL;
+
+    while(current != NULL)
+    {
+        next = current -> next;
+        current -> next = prev;
+        prev = current;
+        current = next;
+    }
+    *head = prev;
+}
+
+void PrintList(Node ** head)
+{
+    Node * tmp = *head;
+    while(tmp != NULL)
+    {
+        printf("%ld ", tmp -> data);
+        tmp = tmp -> next;
+    }
+    printf("\n");
+}
+
 int main(int argc, char const *argv[])
 {
     // Holds the last node
@@ -87,7 +114,12 @@ int main(int argc, char const *argv[])
     PushNode(&head,10);
     PushNode(&head,20);
     SearchInList(head,21)? printf("True\n") : printf("False\n");
-    DeleteNode(&head,10);
+    // DeleteNode(&head,10);
+
+    PrintList(&head);
+    Reverse(&head);
+    PrintList(&head);
+
     printf("Elements: %ld\n",LenOfList(head));
 
     free(head);
