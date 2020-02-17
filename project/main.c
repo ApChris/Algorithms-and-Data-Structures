@@ -149,6 +149,56 @@ void PrintQueue(Queue * queue)
     printf("\n");
 }
 
+
+
+relation * ReadFILE(const char * filename)
+{
+    FILE *file;
+    long rows = 0;
+    char ch;
+    relation * rel = CreateRelation();
+    if((file = fopen(filename,"r")) == NULL)
+    {
+        perror("ReadFile:");
+        exit(-1);
+    }
+
+    ch = getc(file);
+    for(ch = getc(file); ch != EOF; ch = getc(file))
+    {
+        if(ch == '\n')
+        {
+            rows++;
+        }
+    }
+    rewind(file);
+
+    // We'll create space for rows number of tuples
+    if((rel -> tuples = (tuple *)malloc(rows * sizeof(tuple))) == NULL)
+    {
+        perror("GetColumn_FromFILE.c , first malloc\n");
+        exit(-1);
+    }
+
+    long key = 0;
+    long payload = 0;
+    long i = 0;
+
+    for(; i < rows; i++)
+    {
+        fscanf(file, "%lu,%lu",&key,&payload);
+        rel -> tuples[i].key = key; // key is the value
+        // rel -> tuples[i].payload = payload; // payload
+    }
+    // The number of tuples is the number of rows
+    rel -> num_tuples = rows;
+
+    if(fclose(file) != 0)
+    {
+        perror("File");
+        exit(-1);
+    }
+}
 int main(int argc, char ** argv)
 {
     srand(time(NULL));
