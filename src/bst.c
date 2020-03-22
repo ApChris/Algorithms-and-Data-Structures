@@ -33,9 +33,10 @@ void inorder(Node * node)
 
 Node * PushBST(Node * node, long data)
 {
-    Node * newNode = CreateNode(data);
+    
     if(node == NULL)
     {
+        Node * newNode = CreateNode(data);
         node = newNode;
         return node;
     }
